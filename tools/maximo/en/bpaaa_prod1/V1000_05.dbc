@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script SYSTEM "script.dtd">
+<script author="bpaaa" scriptname="BPAAA_V7500_02">
+	<description>Music Application</description>
+	<statements>
+		
+		<!-- Auto Keys -->
+		<freeform description="Create Autokey used by Music table">
+			<sql target="all">
+				insert into autokey (seed, orgid, siteid, autokeyname, setid, langcode, autokeyid) values (1000, null, null, 'BPAAAMUSICSEQ', null, 'EN', autokeyseq.nextval)
+				;
+			</sql>
+		</freeform>
+		
+		<!-- Music Type ALN Domain -->
+		<specify_aln_domain domainid="BPAAAMUSICTYPE" description="Music Types" maxtype="UPPER" length="12">
+			<alnvalueinfo value="CLASSIC" description="Classic" />
+			<alnvalueinfo value="ROCK" description="Rock" />
+			<alnvalueinfo value="JAZZ" description="Jazz" />
+			<alnvalueinfo value="POP" description="Pop" />
+		</specify_aln_domain>
+		
+		<!-- Music Table -->
+		<define_table persistent="true" type="system" object="BPAAAMUSIC" description="Music Table" service="ASSET" classname="bpaaa.prod1.app.musart.BPAAAMusicSet" primarykey="MUSICNUM" mainobject="true" internal="false">
+			<attrdef attribute="MUSICNUM" canautonum="true" autokey="BPAAAMUSICSEQ" defaultvalue="&amp;AUTOKEY&amp;" title="Music" remarks="Music Identification" maxtype="UPPER" length="12" persistent="true" haslongdesc="false" required="true" mustbe="true" ispositive="false" userdefined="false" />
+			<attrdef attribute="TITLE" title="Title" remarks="Music Title" maxtype="ALN" length="256" persistent="true" haslongdesc="false" required="false" mustbe="true" ispositive="false" canautonum="false" userdefined="false" />
+			<attrdef attribute="DESCRIPTION" title="Description" remarks="Music's Description" maxtype="ALN" length="256" persistent="true" haslongdesc="true" required="false" mustbe="true" ispositive="false" canautonum="false" userdefined="false" />
+			<attrdef attribute="MUSICTYPE" domain="BPAAAMUSICTYPE" title="Music Type" remarks="Music's Type" maxtype="UPPER" length="12" persistent="true" haslongdesc="false" required="false" mustbe="true" ispositive="false" canautonum="false" userdefined="false" />
+			<attrdef attribute="ARTISTNUM" classname="bpaaa.prod1.app.musart.BPAAAFldMusicArtistNum" title="Artist" remarks="Artist Number" maxtype="UPPER" length="12" persistent="true" haslongdesc="false" required="false" mustbe="true" ispositive="false" canautonum="false" userdefined="false" />
+			<attrdef attribute="ARTISTNAME" classname="bpaaa.prod1.app.musart.virtual.BPAAAFldMusicArtistName" persistent="false" title="Artist Name" remarks="Artist Name" sameasobject="BPAAAARTIST" sameasattribute="NAME" haslongdesc="false" required="false" mustbe="true" ispositive="false" canautonum="false" userdefined="false" />
+		</define_table>
+		
+		<!-- Music Application -->
+		<create_app app="BPAAAMUSIC" description="Music (BPAAA)" maintbname="BPAAAMUSIC" />
+		
+		<!-- Music Main Sigoptions -->
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="READ" description="Read" grantapp="PERSON" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="INSERT" description="New Music" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="SAVE" description="Save Music" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="CLEAR" description="Clear Changes" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="PREVIOUS" description="Previous Music" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="NEXT" description="Next Music" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="DELETE" description="Delete Music" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		
+		<!-- Music - Search Sigoptions -->
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="SEARCHATBPAAA" description="Attribute Search" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="SEARCHBOOK" description="Bookmarks" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="SEARCHMORE" description="More Search Fields" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="SEARCHSQRY" description="Save Current Query" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="SEARCHTIPS" description="View Search Tips" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="SEARCHVMQR" description="View/Manage Queries" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		<add_sigoption visible="true" app="BPAAAMUSIC" optionname="SEARCHWHER" description="Where Clause" grantapp="BPAAAMUSIC" grantoption="READ" esigenabled="false" langcode="EN" />
+		
+		<!-- Music - Tools Menu -->
+		<create_app_menu app="BPAAAMUSIC" type="tool" >
+			<app_menu_option option="INSERT" tabdisplay="ALL" image="nav_icon_insertkey.gif" accesskey="CTRL+ALT+I" />
+			<app_menu_option option="SAVE" tabdisplay="MAIN" image="nav_icon_save.gif" accesskey="CTRL+ALT+S"/>
+			<app_menu_option option="CLEAR" tabdisplay="MAIN" image="nav_icon_clear.gif" accesskey="CTRL+ALT+C"/>
+			<menu_separator tabdisplay="MAIN" />
+			<app_menu_option option="PREVIOUS" tabdisplay="ALL" image="nav_icon_previous.gif" accesskey="CTRL+ALT+P"/>
+			<app_menu_option option="NEXT" tabdisplay="ALL" image="nav_icon_next.gif" accesskey="CTRL+ALT+N"/>
+		</create_app_menu>
+		
+		<!-- Music - Application Menu -->
+		<create_app_menu app="BPAAAMUSIC" type="action" >
+			<app_menu_option option="DELETE" tabdisplay="MAIN" />
+		</create_app_menu>
+		
+		<!-- Music - Search Menu -->
+		<create_app_menu app="BPAAAMUSIC" type="search" >
+			<app_menu_header headerdescription="Advanced Search" image="atb_search.gif" >
+				<app_menu_option option="SEARCHMORE" tabdisplay="ALL" />
+				<app_menu_option option="SEARCHWHER" tabdisplay="ALL" />
+				<app_menu_option option="SEARCHATBPAAA" tabdisplay="ALL" />
+				<app_menu_option option="SEARCHTIPS" tabdisplay="ALL" />
+			</app_menu_header>
+			<app_menu_header headerdescription="Save Query" image="atb_save.gif" >
+				<app_menu_option option="SEARCHSQRY" tabdisplay="ALL" />
+				<app_menu_option option="SEARCHVMQR" tabdisplay="ALL" />
+			</app_menu_header>
+			<app_menu_option option="SEARCHBOOK" tabdisplay="ALL" image="atb_bookmark.gif" />
+		</create_app_menu>
+
+		<!-- Music and Artist Module -->
+		<create_module module="MUSART" description="Music and Artist (BPAAA)" >
+			<module_menu_app app="BPAAAMUSIC" />
+			<module_menu_app app="BPAAAARTIST" />
+		</create_module>
+		
+		<!-- Relationships -->
+		<create_relationship parent="BPAAAMUSIC" child="BPAAAARTIST" name="BPAAAARTIST" whereclause="artistnum=:artistnum" remarks="Returns artist reference from a music." />
+		
+	</statements>
+</script>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<product>
+  <name/>
+  <version>
+    <major>1</major>
+    <minor>0</minor>
+    <modlevel>0</modlevel>
+    <patch>0</patch>
+    <build>20180314-0355</build>
+  </version>
+  <dbmaxvarname>bpaaa_prod1</dbmaxvarname>
+  <dbscripts>bpaaa_prod1</dbscripts>
+  <dbversion>V1000-05</dbversion>
+  <checklicense/>
+  <lastdbversion>V1000-00</lastdbversion>
+  <extensions>
+    <!-- place object extensions here -->
+    <field objectname="ASSET" attributename="ASSETNUM" extends="psdi.app.asset.FldAssetnum">bpaaa.prod1.BPAAAFLDSampleFieldValidator</field>
+  </extensions>
+</product>
