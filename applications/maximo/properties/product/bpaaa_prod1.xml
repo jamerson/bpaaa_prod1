@@ -6,7 +6,7 @@
     <minor>0</minor>
     <modlevel>0</modlevel>
     <patch>0</patch>
-    <build>20180314-0355</build>
+    <build>20180716-1242</build>
   </version>
   <dbmaxvarname>bpaaa_prod1</dbmaxvarname>
   <dbscripts>bpaaa_prod1</dbscripts>
